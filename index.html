@@ -362,6 +362,58 @@
     color:var(--ink-3);
   }
   .card-note svg{width:13px;height:13px;stroke-width:1.9;flex:none;}
+  .card-note.link{color:var(--ink-2);font-weight:500;}
+  .card-note.link .arw{margin-left:auto;transition:transform .25s var(--ease);}
+
+  /* A card that leaves the site announces itself and asks first. */
+  .proj.clickable{cursor:pointer;}
+  .proj.clickable:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+  .proj.clickable:hover .card-note.link{color:var(--ink);}
+  .proj.clickable:hover .card-note.link .arw{transform:translateX(4px);}
+
+  /* ---------------- Leave-site confirm ---------------- */
+  .modal-back{
+    position:fixed;inset:0;z-index:150;
+    background:rgba(12,12,13,.42);
+    backdrop-filter:blur(5px);
+    -webkit-backdrop-filter:blur(5px);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+    opacity:0;pointer-events:none;
+    transition:opacity .25s var(--ease);
+  }
+  .modal-back.open{opacity:1;pointer-events:auto;}
+  .modal{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    box-shadow:var(--shadow-lg);
+    padding:32px;
+    width:100%;max-width:430px;
+    transform:translateY(12px) scale(.97);
+    transition:transform .28s var(--ease);
+  }
+  .modal-back.open .modal{transform:none;}
+  .modal h3{font-size:1.3rem;margin-bottom:10px;}
+  .modal p{color:var(--ink-2);font-size:.95rem;}
+  .modal .dest{
+    display:flex;align-items:center;gap:9px;
+    font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+    font-size:.84rem;
+    color:var(--ink);
+    background:var(--bg-2);
+    border:1px solid var(--line);
+    padding:11px 13px;
+    border-radius:9px;
+    margin:16px 0 24px;
+    word-break:break-all;
+  }
+  .modal .dest svg{width:14px;height:14px;stroke-width:1.9;flex:none;color:var(--ink-3);}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;}
+  @media (max-width:480px){
+    .modal{padding:24px;}
+    .modal-actions .btn{flex:1;}
+  }
 
   /* ---------------- Roadmap ---------------- */
   #roadmap{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -612,7 +664,11 @@
 
       <div class="proj-grid reveal">
 
-        <article class="proj">
+        <article class="proj clickable"
+                 data-visit="https://gilver-app.netlify.app"
+                 data-visit-name="Gilver"
+                 role="button" tabindex="0"
+                 aria-label="Gilver. Opens a confirmation before visiting the live app at gilver-app.netlify.app">
           <div class="proj-top">
             <div class="proj-mark">
               <svg viewBox="0 0 64 56" aria-hidden="true">
@@ -631,9 +687,10 @@
           <div class="tags">
             <span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">TypeScript</span><span class="tag">Supabase</span><span class="tag">Product design</span>
           </div>
-          <p class="card-note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/><path d="M8 10.5V7.4a4 4 0 0 1 8 0v3.1"/></svg>
-            Source is private while the app is in development
+          <p class="card-note link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4c2.1 2.3 3.3 5.4 3.3 8.6s-1.2 6.3-3.3 8.6c-2.1-2.3-3.3-5.4-3.3-8.6S9.9 5.7 12 3.4z"/></svg>
+            <span>Visit the live app</span>
+            <svg class="arw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12.5 6 6 6-6 6"/></svg>
           </p>
         </article>
 
@@ -770,6 +827,21 @@
     </div>
   </div>
 </footer>
+
+<div class="modal-back" id="leaveModal" role="dialog" aria-modal="true" aria-labelledby="leaveTitle" aria-hidden="true">
+  <div class="modal">
+    <h3 id="leaveTitle">Open Gilver?</h3>
+    <p>This leaves my portfolio and takes you to the live app. It opens in a new tab, so this page stays put.</p>
+    <p class="dest">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 13.5a4 4 0 0 0 5.7 0l2.6-2.6a4 4 0 0 0-5.7-5.7l-1.3 1.3"/><path d="M13.5 10.5a4 4 0 0 0-5.7 0l-2.6 2.6a4 4 0 0 0 5.7 5.7l1.3-1.3"/></svg>
+      <span id="leaveDest">gilver-app.netlify.app</span>
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" type="button" id="leaveCancel">Cancel</button>
+      <button class="btn btn-dark" type="button" id="leaveGo">Visit Gilver</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -931,6 +1003,67 @@
       } else { ok(); }
     });
   }
+
+  /* ---------- confirm before sending anyone off the site ---------- */
+  var mBack = document.getElementById('leaveModal');
+  var mTitle = document.getElementById('leaveTitle');
+  var mDest = document.getElementById('leaveDest');
+  var mGo = document.getElementById('leaveGo');
+  var mCancel = document.getElementById('leaveCancel');
+  var pending = null, lastFocus = null;
+
+  function openLeave(url, name){
+    pending = url;
+    mTitle.textContent = 'Open ' + name + '?';
+    mGo.textContent = 'Visit ' + name;
+    mDest.textContent = url.replace(/^https?:\/\//, '');
+    lastFocus = document.activeElement;
+    mBack.classList.add('open');
+    mBack.removeAttribute('aria-hidden');
+    document.body.style.overflow = 'hidden';
+    mGo.focus();
+  }
+  function closeLeave(){
+    pending = null;
+    mBack.classList.remove('open');
+    mBack.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  if(mBack){
+    mCancel.addEventListener('click', closeLeave);
+    mBack.addEventListener('click', function(e){ if(e.target === mBack) closeLeave(); });
+    mGo.addEventListener('click', function(){
+      var url = pending;
+      closeLeave();
+      // Opened straight off the click so pop-up blockers stay happy.
+      if(url) window.open(url, '_blank', 'noopener,noreferrer');
+    });
+    document.addEventListener('keydown', function(e){
+      if(!mBack.classList.contains('open')) return;
+      if(e.key === 'Escape'){ closeLeave(); return; }
+      if(e.key === 'Tab'){
+        // Only two controls in here, so keep focus bouncing between them.
+        var f = [mCancel, mGo];
+        var i = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1)].focus();
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-visit]').forEach(function(el){
+    function ask(){
+      // Selecting text inside the card should not count as wanting to leave.
+      if(window.getSelection && String(window.getSelection()).length) return;
+      openLeave(el.getAttribute('data-visit'), el.getAttribute('data-visit-name') || 'this link');
+    }
+    el.addEventListener('click', ask);
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){ e.preventDefault(); ask(); }
+    });
+  });
 
   /* ---------- placeholder links speak up instead of going nowhere ---------- */
   document.querySelectorAll('[data-soft]').forEach(function(el){
