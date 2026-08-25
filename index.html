@@ -349,6 +349,19 @@
     padding:5px 10px;border-radius:7px;
     background:var(--bg-2);color:var(--ink-2);
   }
+  /* Quiet footnote for status that has no link behind it yet. Better an
+     honest marker than a URL that 404s for every visitor. */
+  .card-note{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+    font-size:.79rem;
+    color:var(--ink-3);
+  }
+  .card-note svg{width:13px;height:13px;stroke-width:1.9;flex:none;}
 
   /* ---------------- Roadmap ---------------- */
   #roadmap{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -611,8 +624,12 @@
           <p class="lead">A meme sharing and community app built around identity, not just content.</p>
           <p class="desc">Gilver organises memes and discussion across more than fifty five categories spanning humour, lifestyle, identity, and niche interests. Built with React Native and Expo on a Supabase backend, it's moving from product architecture into UI polish and go to market prep.</p>
           <div class="tags">
-            <span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">Supabase</span><span class="tag">Product design</span>
+            <span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">TypeScript</span><span class="tag">Supabase</span><span class="tag">Product design</span>
           </div>
+          <p class="card-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/><path d="M8 10.5V7.4a4 4 0 0 1 8 0v3.1"/></svg>
+            Source is private while the app is in development
+          </p>
         </article>
 
         <article class="proj">
@@ -624,8 +641,12 @@
           <p class="lead">The company taking shape around Gilver and what comes after it.</p>
           <p class="desc">Nythen is the umbrella over a set of ventures, Nythen Secure, Nythen AI, Nythen Studio and Nythen Labs, with Gilver as the first product out of it. The identity is set, the domain is secured, and the roadmap for what ships next is being written now.</p>
           <div class="tags">
-            <span class="tag">Brand and strategy</span><span class="tag">Product</span><span class="tag">nythen.com</span>
+            <span class="tag">Brand and strategy</span><span class="tag">Product</span><span class="tag">Ventures</span>
           </div>
+          <p class="card-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4c2.1 2.3 3.3 5.4 3.3 8.6s-1.2 6.3-3.3 8.6c-2.1-2.3-3.3-5.4-3.3-8.6S9.9 5.7 12 3.4z"/></svg>
+            nythen.com secured, site in progress
+          </p>
         </article>
 
       </div>
